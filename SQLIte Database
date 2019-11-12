@@ -1,0 +1,26 @@
+Database Schema:
+
+CREATE TABLE Sensors (ID INTEGER PRIMARY KEY,Unit TEXT, Name TEXT,Type TEXT, Address TEXT );
+CREATE TABLE S_Values (S_Values_Key INTEGER PRIMARY KEY, Sensor_ID INTEGER, Date_Time DATE, S_Value INTEGER);
+CREATE TRIGGER insert_S_Values_Date_Time AFTER  INSERT ON S_Values
+BEGIN
+  UPDATE S_Values SET Date_Time = DATETIME('NOW','localtime')  WHERE rowid = new.rowid;
+END;
+
+
+Sensor Table:
+
+1|C|Außentemperatur Kesselmodul 0|LWZ|0D000301000C00000000001D
+2|C|Kollektortemperatur Kesselmodul 0|LWZ|0D0003010031021D00000061
+3|C|Raumtemperatur FE6 Kesselmodul 0|LWZ|0D0003010031000400000046
+4|C|Raumtemperatur Soll FE6 HK1 Kesselmodul 0|LWZ|0D0003010031000600000048
+5|C|Restwärme Speicher Kesselmodul 0|LWZ|0D0003010031021D00000061
+6|C|Rücklauftemperatur vor Speicher Kesselmodul 0|LWZ|0D0003010031014500000088
+7|C|Speichertemperatur unten Kesselmodul 0|LWZ|0D00030100310162000000A5
+8|C|Verdampfertemperatur Kesselmodul 0|LWZ|0D000301003101EB0000012E
+9|C|Vorlauftemperatur (14) Kesselmodul 0|LWZ|0D00030100310162000000A5
+10|C|Vorlauftemperatur HK1 Kesselmodul 0|LWZ|0D0003010031014300000086
+11|C|Vorlauftemperatur Soll (15) Kesselmodul 0|LWZ|0D00030100310290000000D4
+12|C|Vorlauftemperatur Soll HK1 Kesselmodul 0|LWZ|0D00030100310290000000D4
+13|C|Warmwassertemperatur Kesselmodul 0|LWZ|0D000301000E00000000001F
+14|C|Warmwassertemperatur Soll Kesselmodul 0|LWZ|0D0003010003000000000014
