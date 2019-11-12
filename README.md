@@ -1,2 +1,2 @@
 # LWA
-A data collector for LWA heatpump
+A data collector for Stiebel Eltron LWA heatpump
