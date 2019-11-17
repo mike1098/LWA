@@ -1,0 +1,142 @@
+<?php
+
+$db = new PDO('sqlite:./db/HouseKeeper.db');
+$val= array();
+//$dateTime= array();
+$count="";
+
+//$fiveAgo = mktime(date("G"),date("i")-5,date("s"),date("m"),date("d"),date("Y"));
+//echo(date("Y-m-d G:i",$fiveAgo) . "<br />");
+
+$result = $db->query("select S_Value from S_Values where Date_Time>=DATETIME('NOW','localtime','-3 minutes') and (Sensor_ID=1 or Sensor_ID=3 or Sensor_ID=10)");
+
+foreach ($result as $row)
+{
+  $val[] = $row["S_Value"]/10; 
+  $count++;
+  //echo ("Value: " . $row["S_Value"]/10 . "| ID: " . $row["Sensor_ID"] . "<br />" );
+}
+
+//echo ("Vorltemp.: " . $val[$count-1] . "<br />");
+//echo ("Raumtemp.: " . $val[$count-2] . "<br />");
+//echo ("Aussentemp.: " . $val[$count-3] . "<br />");
+
+$db = NULL;
+
+?>
+
+<html>
+<head>
+	<title>Mikes Home Keeper</title>
+	<meta http-equiv="refresh" content="300" />
+	<script type="text/javascript" src="./lib/CoolClock/coolclock.js"></script> 
+	<script type="text/javascript" src="./lib/CoolClock/moreskins.js"></script> 
+	
+	<style type="text/css"></style>
+	<link rel="stylesheet" type="text/css" href="./styles.css" />
+	
+	
+	
+	<script src="./lib/RGraph/RGraph.common.core.js"></script>
+	<script src="./lib/RGraph/RGraph.common.adjusting.js"></script> <!-- Just needed for adjusting -->
+	<script src="./lib/RGRaph/RGraph.common.annotate.js"></script>  <!-- Just needed for annotating -->
+	<script src="./lib/RGraph/RGraph.common.context.js"></script>   <!-- Just needed for context menus -->
+	<script src="./lib/RGraph/RGraph.common.effects.js"></script>   <!-- Just needed for visual effects -->
+	<script src="./lib/RGraph/RGraph.common.resizing.js"></script>  <!-- Just needed for resizing -->
+	<script src="./lib/RGRaph/RGraph.common.tooltips.js"></script>  <!-- Just needed for tooltips -->
+	<script src="./lib/RGraph/RGraph.common.zoom.js"></script>      <!-- Just needed for zoom -->
+	<script src="./lib/RGraph/RGraph.thermometer.js"></script>      <!-- Just needed for thermometer charts -->
+	
+	
+<script>
+    window.onload = function ()
+    { 
+        var OutTemperature = new RGraph.Thermometer('OutTemp', -20,50,<?php print($val[$count-3]) ?>);
+        OutTemperature.Set('chart.gutter.left', 45);
+        OutTemperature.Set('chart.colors', ['rgba(255,0,0,1)']);
+        OutTemperature.Set('chart.title.side', 'Aussentemperatur');
+        OutTemperature.Draw();
+
+        var RoomTemperature = new RGraph.Thermometer('RoomTemp', 0,50,<?php print($val[$count-2]) ?>);
+        RoomTemperature.Set('chart.gutter.left', 45);
+        RoomTemperature.Set('chart.colors', ['rgba(255,0,0,1)']);
+        RoomTemperature.Set('chart.title.side', 'Raumtemperatur');
+        RoomTemperature.Draw();
+
+        var PreTemperature = new RGraph.Thermometer('PreTemp', 0,50,<?php print($val[$count-1]) ?>);
+        PreTemperature.Set('chart.gutter.left', 45);
+        PreTemperature.Set('chart.colors', ['rgba(255,0,0,1)']);
+        PreTemperature.Set('chart.title.side', 'Vorlauftemperatur');
+        PreTemperature.Draw();
+        
+        CoolClock.findAndCreateClocks();
+
+	//document.write("<p>Available Height: " + screen.availHeight + "<p>");
+	// document.write("Available Width: " + screen.availWidth); 
+    };
+</script>
+
+
+</head> 
+<body>
+
+<div id=main>
+
+
+<div id="navi">
+	<ul>
+		<li><a href="./traffic.html">Verkehr</a></li>
+		<li><a href="./dwd.html">Wetter</a></li>
+		<li><a href="./solar.php">Heizung</a></li>
+		<li><a href="./tvtv.html">TvTv</a></li>
+		<li><a href="./about.html">About</a></li>
+	</ul>
+</div>
+
+
+	<canvas id="OutTemp" height="300" width="110" style="position:absolute;top:20px;left:220px;">[ No Canvas Support]</canvas>
+	<canvas id="RoomTemp" height="300" width="110" style="position:absolute;top:20px;left:110px;">[ No Canvas Support]</canvas>
+	<canvas id="PreTemp" height="300" width="110" style="position:absolute;top:20px;left:0px;">[ No Canvas Support]</canvas>
+
+
+        <canvas id="clock" style="position:absolute;top:10px;left:850px;" class="CoolClock::50::"></canvas>
+
+
+<div id="weather" 
+	style="position:absolute;top:0px;left:650px;
+	border:3px solid #BCBCBC;width:158px;
+	text-align:center;
+	font-family:arial,verdana,sans-serif;">
+	<div style="font-size:12px;margin-bottom:2px; font-weight:bold;">
+	  Das Wetter f&uuml;r<br>Dasing
+	</div>
+	<iframe  
+	  marginheight="0" 
+	  marginwidth="0" 
+	  frameborder="0" 
+	  scrolling="no" 
+	  src="http://www.wetteronline.de/cgi-bin/hpweather?PLZ=86453&amp;FORMAT=long&amp;MENU=dropdown&amp;MAP=rainradar"  
+	  width="158px" height="308px">
+	 </iframe>
+</div>
+
+<div id="traffic"
+	style="position:absolute;top:350px;left:0px;"
+	>
+	<iframe
+	src="http://www.verkehrsinfo.de/ticker/newticker.php?width=900&height=20&fontcolor=000000&backcolor=d0e4fe&framecolor=000000&wcolor=d0e4fe&fontsize=14&speed=75&country=1&suchstr=bl=264"
+	width="750" height="50"
+	>
+	</iframe>
+</div>
+
+<!--
+<iframe src="http://www.verkehrsinfo.de/ticker/newticker.php?width=900&height=20&fontcolor=000000&backcolor=d0e4fe&framecolor=000000&wcolor=d0e4fe&fontsize=14&speed=75&country=1&suchstr=bl=264" 
+width="750" height="50"
+style="position:absolute;top:350px;left:0px;background-color:#d0e4fe;"
+></iframe>
+-->
+
+</div>
+</body>
+</html>

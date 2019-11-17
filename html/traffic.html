@@ -1,0 +1,53 @@
+<!--
+Copyright by Michael Frank, Michael.Frank@mikefrank.de
+The content and scripts of this web page is intellectual property of Michael Frank.
+Copy, Modification and re-engeneering is prohibited by law. michael.frank@mikefrank.de
+//-->
+
+<html>
+<head>
+	<title>Mikes Home Keeper - Weather</title>
+	<script type="text/javascript" src="./lib/CoolClock/coolclock.js"></script> 
+	<script type="text/javascript" src="./lib/CoolClock/moreskins.js"></script> 
+	
+	<style type="text/css"></style>
+	<link rel="stylesheet" type="text/css" href="./styles.css" />
+	
+	
+	
+<script>
+    window.onload = function ()
+    {   
+        CoolClock.findAndCreateClocks();
+    };
+</script>
+</head> 
+<body>
+
+<div id=main>
+
+
+<div id="navi">
+	<ul class="navi">
+		<li class="navi"><a class="navi" href="./index.html">Home</a></li>
+		<li class="navi"><a class="navi" href="./dwd.html">Wetter</a></li>
+		<li class="navi"><a class="navi" href="./heizung.php">Heizung</a></li>
+		<li class="navi"><a class="navi" href="./tvtv.html">TvTv</a></li>
+		<li class="navi"><a class="navi" href="./version.php">About</a></li>
+		<li class="navi"><a class="navi"></a></li>
+	</ul>
+</div>
+
+
+        <canvas id="clock" style="position:absolute;top:30px;left:690px;" class="CoolClock::50::"></canvas>
+
+
+<iframe src="http://mobil.verkehrsinfo.de/mmeldung.php3?bl=264" 
+width="650" height="440"
+style="position:absolute;top:30px;left:0px;background-color:#d0e4fe;"
+></iframe>
+
+
+</div>
+</body>
+</html>

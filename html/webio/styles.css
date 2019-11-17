@@ -1,0 +1,71 @@
+@CHARSET "ISO-8859-1";
+
+ul{
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	overflow:hidden;
+}
+
+li{
+	float:left;
+	font-family: Impact, Charcoal, sans-serif;
+	font-size: 0.8em;
+}
+
+a:link,a:visited{
+	display:block;
+	width:120px;
+	color:#FFFFFF;
+	background-color:#AAAAAA;
+	text-align:center;
+	padding:4px;
+	text-decoration:none;
+	text-transform:lowercase;
+}
+
+a:hover,a:active{
+	background-color:#FFFFFF;
+	color:#000000;
+}
+
+
+#page_margins {
+	position:absolute;
+	width:70%;
+	margin-left:auto;
+	margin-right:auto;
+	background-color:#ffffff;
+}
+
+.center {
+	margin-left:auto;
+	margin-right:auto;
+	width:70%;
+	background-color:#ffffff;
+}
+
+#top{
+	border:1px solid gray;
+}
+
+#navi{
+	background-color:#AAAAAA;
+	padding-right:100px;
+	border:1px solid gray;
+}
+
+#main{
+	position:relative;
+	top:0px;
+	left:0px;
+	margin:0px; 
+	border:0px solid red;
+	background-image:url('Ansichten_Halle3.jpg');
+	background-position:top left;
+	background-repeat:no-repeat;
+	padding-bottom:450px;
+	padding-left:1230px;	
+
+}
+

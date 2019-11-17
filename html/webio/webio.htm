@@ -1,0 +1,298 @@
+<html>
+<head>
+<title>Web-IO AJAX/PHP-Client</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<STYLE type=text/css>
+TD {COLOR: #000000; FONT-FAMILY: Verdana,Arial,Helvetica; FONT-SIZE: 10pt;  }
+</STYLE>
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000" link="#000000">
+<form name="ioform">
+  <table width="500" border="1" height="144" bgcolor="#CCCCCC">
+    <tr>
+    <td>
+        <table width="500">
+          <tr>
+            <td colspan="6"><b>Input/Output Control </b></td>
+          </tr>
+          <tr>
+            <td width="100">
+              <input type="checkbox" name="cb_output" onclick="setOutput(0)">
+              Output 0</td>
+            <td width="100">
+              <input type="checkbox" name="cb_input">
+              Input 0</td>
+            <td width="100">
+              <div align="right">Counter 0 </div>
+            </td>
+            <td width="*" bgcolor="#FFFFFF" id="counter0"></td>
+            <td width="55">
+              <input type="button" value="Read" onclick="getCounter(0)">
+            </td>
+            <td width="55">
+              <input type="button" name="bt_counter_clear0" value="Clear" onclick="clearCounter(0)">
+            </td>
+          </tr>
+          <tr>
+            <td width="100">
+              <input type="checkbox" name="cb_output" onclick="setOutput(1)">
+              Output 1</td>
+            <td width="100">
+              <input type="checkbox" name="cb_input">
+              Input 1</td>
+            <td width="100">
+              <div align="right">Counter 1 </div>
+            </td>
+            <td width="*" bgcolor="#FFFFFF" id="counter1"></td>
+            <td width="55">
+              <input type="button" value="Read" onclick="getCounter(1)">
+            </td>
+            <td width="55">
+              <input type="button" value="Clear" onclick="clearCounter(1)">
+            </td>
+          </tr>
+          <tr>
+            <td width="100" height="29">
+              <input type="button" value="Read all" onclick="getOutputs()">
+            </td>
+            <td width="100" height="29">
+              <input type="button" value="Read all" onclick="getInputs()">
+            </td>
+            <td width="100" height="29">
+              <div align="right">Counter all </div>
+            </td>
+            <td width="*" height="29"></td>
+            <td width="55" height="29">
+              <input type="button" value="Read" onclick="getCounter()">
+            </td>
+            <td width="55" height="29">
+              <input type="button" value="Clear" onclick="clearCounter()">
+            </td>
+          </tr>
+          <tr>
+            <td width="100">
+              <input type="checkbox" name="cb_output_polling">
+              Polling</td>
+            <td width="100">
+              <input type="checkbox" name="cb_input_polling">
+              Polling</td>
+            <td width="100">
+              <div align="right">
+                <input type="button" value="Set Interval" onclick="setPolInterval()">
+              </div>
+            </td>
+            <td width="*" >
+              <input type="text" name="ed_interval" value="500" maxlength="6" size="10">
+            </td>
+            <td colspan="2">
+              <input type="checkbox" name="cb_counter_polling">
+              Polling</td>
+          </tr>
+        </table>
+    </td>
+  </tr>
+</table>
+  <table width="500" border="1" bgcolor="#CCCCCC" >
+    <tr>
+    <td height="35">
+        <table width="500">
+          <tr>
+            <td width="188">IP Address</td>
+            <td width="149">Port</td>
+            <td width="147">Password</td>
+          </tr>
+          <tr>
+            <td width="188">
+              <input type="text" name="ed_ip">
+            </td>
+            <td width="149">
+              <input type="text" name="ed_port" maxlength="5" size="15">
+            </td>
+            <td width="147">
+              <input type="text" name="ed_password">
+            </td>
+          </tr>
+        </table>
+    </td>
+  </tr>
+</table>
+</form>
+<p>&nbsp;</p>
+<script language="JavaScript" type="text/javascript">
+<!--
+
+var pollingtimer = window.setInterval("Polling()", 500);
+var MAXIO=2;
+var SendString;
+
+function HexToInt(HexStr)
+{	var TempVal;
+	var HexVal=0;
+	for( i=0; i<HexStr.length;i++)
+	{	if (HexStr.charCodeAt(i) > 57)
+	    {   TempVal = HexStr.charCodeAt(i) - 55;
+		}
+		else
+		{   TempVal = HexStr.charCodeAt(i) - 48;
+		}
+		HexVal=HexVal+TempVal*Math.pow(16, HexStr.length-i-1);
+	}
+	return HexVal;
+}
+
+function DataRequest(SendString)
+{	var xmlHttp;
+	try
+    {	// Internet Explorer
+    	if( window.ActiveXObject )
+    	{	xmlHttp = new ActiveXObject( "Microsoft.XMLHTTP" );
+    	}
+    	// Mozilla, Opera und Safari
+    	else if( window.XMLHttpRequest )
+    	{	xmlHttp = new XMLHttpRequest();
+    	}
+    }
+    // loading of xmlhttp object failed
+    catch( excNotLoadable )
+    {	xmlHttp = false;
+    	alert("no knowen browser");
+    }
+	if 	(xmlHttp)
+	{	xmlHttp.onreadystatechange = DataReceived;
+		xmlHttp.open("GET", SendString, true);
+		xmlHttp.setRequestHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+		xmlHttp.setRequestHeader("Expires", "Sat, 05 Nov 2005 00:00:00 GMT");
+		xmlHttp.setRequestHeader("Pragma","no-cache");
+		xmlHttp.send(null);
+	}
+
+	function DataReceived()
+	{ 	var HexVal;
+		var ReceiveStr;
+		if (xmlHttp.readyState == 4)
+		{	if (xmlHttp.status == 200)
+			{	ReceiveStr = xmlHttp.responseText;
+			    status=ReceiveStr;
+				if (ReceiveStr.substring(0,5)=='input')
+				{	HexVal=HexToInt(ReceiveStr.substring(6,10));
+					for (i=0;i<MAXIO;i++)
+					{	if ((HexVal & Math.pow(2,i)) == Math.pow(2,i))
+						{	ioform.cb_input[i].checked = true;
+						}
+						else
+						{	ioform.cb_input[i].checked = false;
+						}
+					}
+				}
+				if (ReceiveStr.substring(0,6)=='output')
+				{	HexVal=HexToInt(ReceiveStr.substring(7,11));
+					for (i=0;i<MAXIO;i++)
+					{	if ((HexVal & Math.pow(2,i)) == Math.pow(2,i))
+						{	ioform.cb_output[i].checked = true;
+						}
+						else
+						{	ioform.cb_output[i].checked = false;
+						}
+					}
+				}
+				if (ReceiveStr.substring(0,7)=='counter')
+				{	var slength=ReceiveStr.length;
+					if (ReceiveStr.substring(7,8)==';')
+					{	countervalue=ReceiveStr.split(';');
+						for (i=0;i<MAXIO;i++)
+						{	document.getElementById('counter'+i).innerHTML = '<a>'+countervalue[i+1]+'<\/a>';
+						}
+					}
+					else
+					{	if (ReceiveStr.substring(9,10)==';')
+						{	i=(ReceiveStr.substring(7,9));
+							document.getElementById('counter'+i).innerHTML = '<a>'+ReceiveStr.substring(10,slength)+'<\/a>';
+						}
+						else
+						{	i=(ReceiveStr.substring(7,8));
+							document.getElementById('counter'+i).innerHTML = '<a>'+ReceiveStr.substring(9,slength)+'<\/a>';
+						}
+					}
+				}
+			}
+		}
+		//xmlHttp=null;
+	}
+
+}
+
+function setOutput(OutputNr)
+{	if (ioform.cb_output[OutputNr].checked==true)
+	{	SendString='webiorequest.php?IP='+ioform.ed_ip.value+'&PORT='+ioform.ed_port.value
+		+'&COMMAND=outputaccess&PW='+ioform.ed_password.value+'&MASK='+Math.pow(2,OutputNr)+'&STATE='+Math.pow(2,OutputNr)+'&';
+	}
+	else
+	{	SendString='webiorequest.php?IP='+ioform.ed_ip.value+'&PORT='+ioform.ed_port.value
+		+'&COMMAND=outputaccess&PW='+ioform.ed_password.value+'&MASK='+Math.pow(2,OutputNr)+'&STATE=0&';
+	}
+	DataRequest(SendString);
+}
+
+function getOutputs()
+{	DataRequest('webiorequest.php?IP='+ioform.ed_ip.value+'&PORT='+ioform.ed_port.value
+	+'&COMMAND=output&PW='+ioform.ed_password.value+'&');
+}
+
+function getInputs()
+{	DataRequest('webiorequest.php?IP='+ioform.ed_ip.value+'&PORT='+ioform.ed_port.value
+	+'&COMMAND=input&PW='+ioform.ed_password.value+'&');
+}
+
+function getCounter(CounterNr)
+{	if (CounterNr==undefined)
+	{	DataRequest('webiorequest.php?IP='+ioform.ed_ip.value+'&PORT='+ioform.ed_port.value
+		+'&COMMAND=counter&PW='+ioform.ed_password.value+'&');
+	}
+	else
+	{	DataRequest('webiorequest.php?IP='+ioform.ed_ip.value+'&PORT='+ioform.ed_port.value
+		+'&COMMAND=counter'+CounterNr+'&PW='+ioform.ed_password.value+'&');
+	}
+}
+
+function clearCounter(CounterNr)
+{	if (CounterNr==undefined)
+	{	DataRequest('webiorequest.php?IP='+ioform.ed_ip.value+'&PORT='+ioform.ed_port.value
+		+'&COMMAND=counterclear&PW='+ioform.ed_password.value+'&');
+	}
+	else
+	{	DataRequest('webiorequest.php?IP='+ioform.ed_ip.value+'&PORT='+ioform.ed_port.value
+		+'&COMMAND=counterclear'+CounterNr+'&PW='+ioform.ed_password.value+'&');
+	}
+}
+
+function Polling()
+{	if (ioform.cb_output_polling.checked==true)
+	{	DataRequest('webiorequest.php?IP='+ioform.ed_ip.value+'&PORT='+ioform.ed_port.value
+		+'&COMMAND=output&PW='+ioform.ed_password.value+'&');
+	}
+	if (ioform.cb_input_polling.checked==true)
+	{	DataRequest('webiorequest.php?IP='+ioform.ed_ip.value+'&PORT='+ioform.ed_port.value
+		+'&COMMAND=input&PW='+ioform.ed_password.value+'&');
+	}
+	if (ioform.cb_counter_polling.checked==true)
+	{	DataRequest('webiorequest.php?IP='+ioform.ed_ip.value+'&PORT='+ioform.ed_port.value
+		+'&COMMAND=counter&PW='+ioform.ed_password.value+'&');
+	}
+}
+
+function setPolInterval()
+{	var intervaltime=parseInt(ioform.ed_interval.value)
+	if (intervaltime<250)
+	{	intervaltime=250;
+		ioform.ed_interval.value=250;
+	}
+	clearInterval(pollingtimer);
+	pollingtimer = window.setInterval("Polling()", intervaltime);
+}
+
+//-->
+</script>
+</body>
+</html>

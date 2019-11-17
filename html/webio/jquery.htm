@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <!-- Include meta tag to ensure proper rendering and touch zooming -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Include jQuery Mobile stylesheets -->
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <!-- Include the jQuery library -->
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <!-- Include the jQuery Mobile library -->
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  
+<script>
+$(document).ready(function(){
+    document.getElementById("ready").innerHTML = "Document Ready";
+    $("button").click(function(){
+        $.get("webiorequest.php?IP=192.168.1.251&PORT=80&COMMAND=input&PW=&", function(data, status){
+            //alert("Data: " + data + "\nStatus: " + status);
+          var x = data.substring(6,10); 
+          var y = x.toString(10); 
+	    document.getElementById("data").innerHTML = "Data: " + HexToInt(data.substring(6,10)) + " ToString16: " + y + " Soll: " + Math.pow(2,11) +" Status: " + status;
+            
+        });
+    });
+});
+
+function HexToInt(HexStr)
+
+{	var TempVal;
+	var HexVal=0;
+	for( i=0; i<HexStr.length;i++)
+	{	if (HexStr.charCodeAt(i) > 57)
+	    {   TempVal = HexStr.charCodeAt(i) - 55;
+		}
+		else
+		{   TempVal = HexStr.charCodeAt(i) - 48;
+		}
+		HexVal=HexVal+TempVal*Math.pow(16, HexStr.length-i-1);
+	}
+	return HexVal;
+}
+
+
+</script>
+</head>
+<body>
+
+<div data-role="page" id="pageone">
+  <div data-role="header">
+    <a href="#" class="ui-btn ui-icon-home ui-btn-icon-left">Home</a>
+     <h1>Welcome To My Homepage</h1>
+    <a href="#anylink" class="ui-btn ui-icon-grid ui-btn-icon-left">Lichter</a>
+    
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <p>Insert Content Here</p>
+    <p id="ready"></p>
+    <p id="data"></p>
+    <button class="ui-btn ui-btn-inline ui-icon-refresh ui-btn-icon-left"> Send </button>
+  </div>
+
+  <div data-role="footer">
+    <h1>Insert Footer Text Here</h1>
+  </div>
+</div>  
+
+
+
+
+</body>
+</html>

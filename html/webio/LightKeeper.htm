@@ -1,0 +1,142 @@
+<!--
+Copyright by Michael Frank, Michael.Frank@mikefrank.de
+The content and scripts of this web page is intellectual property of Michael Frank.
+Copy, Modification and re-engeneering is prohibited by law. michaewl.frank@mikefrank.de
+//-->
+
+<html>
+<head>
+	<title>Ankner Metallbau, Halle 3 Türen und Fensterüberwachung</title>
+	<script type="text/javascript" src="LightKeeper.js"></script>
+	<link rel="stylesheet" type="text/css" href="../styles.css" />
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<applet name="dio1" archive="dio.jar" code="dio.class" codebase="http://192.168.2.200" width="0" height="0" mayscript>
+	<param name="device" value="1">
+	<param name="showerrors" value="on">
+	<param name="inputpolling" value="on">
+	<param name="outputpolling" value="on">
+	<param name="counterpolling" value="off">
+	<param name="pollingrate" value="1000">
+</applet>
+
+
+<applet name="dio2" archive="dio.jar" code="dio.class" codebase="http://192.168.2.201" width="0" height="0" mayscript>
+	<param name="device" value="2">
+	<param name="showerrors" value="off">
+	<param name="inputpolling" value="on">
+	<param name="outputpolling" value="on">
+	<param name="counterpolling" value="off">
+	<param name="pollingrate" value="1000">
+</applet>
+
+<applet name="dio3" archive="dio.jar" code="dio.class" codebase="http://192.168.2.202" width="0" height="0" mayscript>
+	<param name="device" value="3">
+	<param name="showerrors" value="off">
+	<param name="inputpolling" value="on">
+	<param name="outputpolling" value="on">
+	<param name="counterpolling" value="off">
+	<param name="pollingrate" value="1000">
+</applet>
+
+
+
+<div class="center" >
+	<div id=top>
+		<img alt="Ankner Metallbau" title="Ankner Metallbau" src="../ankner.png"></img>
+	</div>
+	<div id="navi">
+		<ul>
+			<li><a href="index.htm">Home</a></li>
+			<li><a href="doorkeeper.htm">Türen und Fenster</a></li>
+			<li><a href="contact.asp">Contact</a></li>
+			<li><a href="about.asp">About</a></li>
+		</ul>
+	</div>
+
+	<div id=main_lights>
+		<div id=ControlButton>
+		<p>Zum Ausschalten aller Lichter hier drücken:</p>
+		<input type="button" style='position:relative;   width:100px' onclick="show_confirm()" value="Alles Aus" />
+		</div>
+		<!-- Layouts -->
+		<h1 style="position:absolute;top:200px;left:520px;z-index:1">Erdgeschoss</h1>
+		<img id=Halle_EG border='0' src='EG.png' style='position:absolute; top:225px; left:0px; width:1200px'>
+		<h1 style="position:absolute;top:745px;left:520px;">Obergeschoss</h1>
+		<img id=Halle_OG border='0' src='OG.png' style='position:absolute; z-index:-1; top:750px; left:0px; width:1200px'>
+		
+		<!-- Beleuchtung -->
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(1,0)">
+		<img id=pic10 alt="Licht ist an" title="Halle Vorn (3.3)" style="position:absolute;top:930px;left:360px;" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(1,1)">
+		<img id=pic11 alt="Licht ist an" title="Halle Treppenaufgang (3.2)" style="position:absolute;top:1130px;left:200px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(1,2)">
+		<img id=pic12 alt="Licht ist an" title="Außenlicht Süd (3.6)" style="position:absolute;top:1230px;left:600px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(1,3)">
+		<img id=pic13 alt="Licht ist an" title="Außenlicht Ost (3.6a)" style="position:absolute;top:1005px;left:1100px" src="light.png"></A>
+		<img id=pic14 >
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(1,5)">
+		<img id=pic15 alt="Licht ist an" title="Halle Hinten (3.5)" style="position:absolute;top:930px;left:950px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(1,6)">
+		<img id=pic16 alt="Licht ist an" title="Halle Mitte (3.4)" style="position:absolute;top:930px;left:650px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(1,7)">
+		<img id=pic17 alt="Licht ist an" title="Halle Mittelteil (3.1)" style="position:absolute;top:1000px;left:500px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(1,8)">
+		<img id=pic18 alt="Licht ist an" title="Dachspitz" style="position:absolute;top:510px;left:20px" src="light.png"></A>
+		<img id=pic19 >
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(1,10)">
+		<img id=pic110 alt="Licht ist an" title="Aufenthalt" style="position:absolute;top:630px;left:120px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(1,11)">
+		<img id=pic111 alt="Licht ist an" title="Büro 1" style="position:absolute;top:860px;left:130px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(2,0)">
+		<img id=pic20 alt="Licht ist an" title="WC OG" style="position:absolute;top:940px;left:100px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(2,1)">
+		<img id=pic21 alt="Licht ist an" title="Plotterraum" style="position:absolute;top:940px;left:150px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(2,2)">
+		<img id=pic22 alt="Licht ist an" title="Flur OG" style="position:absolute;top:1030px;left:160px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(2,3)">
+		<img id=pic23 alt="Licht ist an" title="Konferenzraum" style="position:absolute;top:1010px;left:110px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(2,4)">
+		<img id=pic24 alt="Licht ist an" title="EDV Raum" style="position:absolute;top:380px;left:120px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(2,5)">
+		<img id=pic25 alt="Licht ist an" title="E-Raum" style="position:absolute;top:330px;left:100px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(2,6)">
+		<img id=pic26 alt="Licht ist an" title="Keller" style="position:absolute;top:330px;left:140px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(2,7)">
+		<img id=pic27 alt="Licht ist an" title="Büro 4" style="position:absolute;top:1140px;left:130px" src="light.png"></A>
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(2,8)">
+		<img id=pic28 alt="Licht ist an" title="Büro 3" style="position:absolute;top:1060px;left:110px" src="light.png"></A>
+		<img id=pic29 >
+		<A href="#" onMouseOver="return changeImage('pic10')" onMouseOut= "return changeImageBack()" onMouseDown="return setOutput(2,10)">
+		<img id=pic210 alt="Licht ist an" title="Umkleide" style="position:absolute;top:560px;left:120px" src="light.png"></A>
+		<img id=pic211 alt="Licht ist an" title="Flur EG" style="position:absolute;top:490px;left:160px" src="light.png">
+		<img id=pic30 alt="Licht ist an" title="WC Damen EG" style="position:absolute;top:430px;left:110px" src="light.png">
+		<img id=pic31 alt="Licht ist an" title="WC Heren EG" style="position:absolute;top:500px;left:110px" src="light.png">
+		<img id=pic32>
+		<img id=pic33>
+		<img id=pic34>
+		<img id=pic35>
+		<img id=pic36>
+		<img id=pic37>
+		<img id=pic38>
+		<img id=pic39>
+		<img id=pic310>
+		<img id=pic311>
+		
+		
+<noscript>
+  <h1>Bitte Java Script aktivieren!</h1>
+</noscript>
+
+    
+<script language="JavaScript" type="text/javascript">
+
+setPassword();
+
+</script>
+</div>
+</div>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!--
+Copyright by Michael Frank, Michael.Frank@mikefrank.de
+The content and scripts of this web page is intellectual property of Michael Frank.
+Copy, Modification and re-engeneering is prohibited by law. michaewl.frank@mikefrank.de
+//-->
+
+<html>
+<head>
+	<title>Ankner Metallbau, Halle 3 Türen und Fensterüberwachung</title>
+	<script type="text/javascript" src="Doorkeeper.js"></script>
+	<link rel="stylesheet" type="text/css" href="../styles.css" />
+</head> 
+
+<body>
+<applet name="dio3" archive="dio.jar" code="dio.class" codebase="http://192.168.2.202" width="0" height="0" mayscript>
+	<param name="device" value="3">
+	<param name="showerrors" value="off">
+	<param name="inputpolling" value="on">
+	<param name="outputpolling" value="off">
+	<param name="counterpolling" value="off">
+	<param name="pollingrate" value="1000">
+</applet>
+
+<applet name="dio4" archive="dio.jar" code="dio.class" codebase="http://192.168.2.203" width="0" height="0" mayscript>
+	<param name="device" value="4">
+	<param name="showerrors" value="off">
+	<param name="inputpolling" value="on">
+	<param name="outputpolling" value="off">
+	<param name="counterpolling" value="off">
+	<param name="pollingrate" value="1000">
+</applet>
+
+
+<div class="center" >
+	<div id=top>
+		<img alt="Ankner Metallbau" title="Ankner Metallbau" src="../ankner.png"></img>
+	</div>
+	<div id="navi">
+		<ul>
+			<li><a href="../index.htm">Home</a></li>
+			<li><a href="LightKeeper.htm">Beleuchtung</a></li>
+			<li><a href="../contact.htm">Contact</a></li>
+			<li><a href="about.htm">About</a></li>
+		</ul>
+	</div>
+	<div id=main_door>
+		<h1 style="position:absolute;top:00px;left:500px;z-index:1">Ansicht</h1>
+		<img id=Halle_EG border='0' src='Ansichten_Halle3.png' style='position:absolute; z-index:0; top:7px; left:3px;'>
+		<!--  Web3 Eingang 0 bis 11 -->
+		<img id=pic30>
+		<img id=pic31>
+		<img id=pic32 alt="Zu" title="Türe Heizung/E-Raum" style="position:absolute;top:190px;left:895px" src="led_0.png">
+		<img id=pic33 alt="Zu" title="Fenster EDV" style="position:absolute;top:180px;left:930px" src="led_0.png">
+		<img id=pic34 alt="Zu" title="Fenster WC/Dusche Herren" style="position:absolute;top:177px;left:980px" src="led_0.png">
+		<img id=pic35 alt="Zu" title="Fenster Umkleide" style="position:absolute;top:177px;left:1053px" src="led_0.png">
+		<img id=pic36 alt="Zu" title="Fenster Aufenthalt" style="position:absolute;top:180px;left:1095px" src="led_0.png">
+		<img id=pic37 alt="Zu" title="Türe EDV Raum" style="position:absolute;top:0px;left:0px;z-index:-1" src="0.png">
+		<img id=pic38>
+		<img id=pic39 alt="Zu" title="Halletüre 1" style="position:absolute;top:190px;left:188px" src="led_0.png">
+		<img id=pic310 alt="Zu" title="Fenster WC OG" style="position:absolute;top:140px;left:970px" src="led_0.png">
+		<img id=pic311 alt="Zu" title="Hallentüre 2" style="position:absolute;top:190px;left:567px" src="led_0.png">
+		
+		<!--  Web4 Eingang 0 bis 11 //-->
+		<img id=pic40 alt="Zu" title="Fenster Büro3/Konferenz" style="position:absolute;top:140px;left:1032px" src="led_0.png">
+		<img id=pic41 alt="Zu" title="Fenster Büro 4" style="position:absolute;top:138px;left:1093px" src="led_0.png">
+		<img id=pic42 alt="Zu" title="Hallentor 1" style="position:absolute;top:170px;left:250px" src="0.png">
+		<img id=pic43 alt="Zu" title="Fenster Büro 1" style="position:absolute;top:140px;left:930px" src="led_0.png">
+		<img id=pic44 alt="Zu" title="Hellentor 2" style="position:absolute;top:170px;left:445px" src="led_0.png">
+		<img id=pic45 alt="Zu" title="Fenster Halle Nord 3" style="position:absolute;top:350px;left:633px" src="led_0.png">
+		<img id=pic46 alt="Zu" title="Fenster Halle Nord 1" style="position:absolute;top:350px;left:250px" src="led_0.png">
+		<img id=pic47 alt="Zu" title="Fenster Halle Nord 2" style="position:absolute;top:350px;left:440px" src="led_0.png">
+		<img id=pic48 alt="Zu" title="Hallentor 3" style="position:absolute;top:170px;left:630px" src="led_0.png">
+		<img id=pic49 alt="Zu" title="Fenster Dachspitz" style="position:absolute;top:110px;left:1012px" src="led_0.png">
+		<img id=pic410 alt="Zu" title="Hallentor 4" style="position:absolute;top:360px;left:1012px" src="led_0.png">
+		<img id=pic411 alt="Zu" title="Oberlichter Halle" style="position:absolute;top:83px;left:1012px" src="led_0.png">
+	</div>
+	
+	<script language="JavaScript" type="text/javascript">
+		setPassword();
+	</script>
+
+</div>
+</body>
+</html>
