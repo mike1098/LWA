@@ -3,4 +3,4 @@ A data collector for Stiebel Eltron LWA 203 or similar heatpump. The code use an
 
 A NodeRed code will be available to show the temperatures as a graph adn send the values via telegram.
 
-Added HTML code fro graph creation
+Added HTML code for graph creation
